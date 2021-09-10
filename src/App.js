@@ -26,7 +26,7 @@ const App = () => {
             setPlaces(data);
         } )
 
-    }, [coordinates,bounds])
+    }, [bounds,coordinates])
 
     return ( 
     <>
