@@ -4,11 +4,12 @@ import {CircularProgress,Typography, FormControl, InputLabel, Grid, MenuItem, Se
 import useStyle from './Styles';
 import PlaceDetails from '../PlaceDetails/PlaceDetails'
 
-const List = ({places}) => {
+const List = ({places, isClicked}) => {
     const classes = useStyle();
     const[type, setType] = useState('Restaurants');
     const [ rating, setRating] = useState('')
     
+    console.log({isClicked})
     return (
         <div className = {classes.container} >
             <Typography variant = "h4"> Restaurants, Hotels and attractions around you </Typography>
