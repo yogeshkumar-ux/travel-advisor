@@ -5,30 +5,32 @@ import useStyles from './styles';
 import Rating from '@material-ui/lab/Rating';
 import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined'
 
-
-const Map = ({setCoordinates, setBounds,places,setIsClicked }) => {
+const Map = ({setCoords, setBounds,places,setIsClicked, }) => {
 
     const classes = useStyles();
 
     const isDesktop = useMediaQuery('(min-width:600px)');
 
-    const coordinates = { lat:0, lng: 0};
+    const coords = { lat:0, lng:0}
 
 
 
     return (
         <div className = {classes.mapContainer}>
             <GoogleMapReact
-             bootstrapURLKeys = {{key : 'AIzaSyAVf3PJJGww7Pu5RrohtvxT3EsScmNwPqQ' }}
-             defaultCenter = {coordinates}
-             center = {coordinates}
+             bootstrapURLKeys = {{key : process.env.REACT_APP_GOOGLE_MAPS_API_KEY }}
+             defaultCenter = {coords}
+             center = {coords}
              defaultZoom = {14}
             margin = {[50 ,50, 50, 50]}
             onChildClick = {(Child)=> setIsClicked(Child)}
             onChange = {(e) => {
                 setBounds({ne: e.marginBounds.ne, sw: e.marginBounds.sw})
-                setCoordinates({ lat: e.center.lat, lng: e.center.lng})
-            }}>
+                setCoords({ lat: e.center.lat, lng: e.center.lng})
+            }}
+            
+            
+>
            
            {places?.map((place, i)=> (
                <div

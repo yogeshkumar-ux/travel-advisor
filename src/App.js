@@ -8,42 +8,56 @@ import Map from './components/Map/Map';
 
 const App = () => {
     const [places, setPlaces] = useState([]);
-
-    const [coordinates, setCoordinates] = useState({lat:0, lng:0});
+    const[filteredPlaces, setFilteredPlaces] = useState([])
+    const [coords, setCoords] = useState({lat:0, lng:0});
     const [bounds,setBounds] = useState();
     const [isClicked, setIsClicked] = useState(null);
+    const[type, setType] = useState('Restaurants');
+    const [ rating, setRating] = useState('')
 
     useEffect(()=>{
    navigator.geolocation.getCurrentPosition(({coords: {latitude , longitude}}) =>{
-    setCoordinates({lat:latitude, lng:longitude})
+    setCoords({lat:latitude, lng:longitude})
    })
     },[])
 
+    useEffect(()=> {
+       const filteredPlaces = places.filter((place)=> place.rating> rating)
+
+       setFilteredPlaces(filteredPlaces)
+    }, [rating])
+
     useEffect(() => {
-        getPlacesData(bounds)
+        getPlacesData(type,bounds)
   
         .then((data)=> {
-            console.log(data);
             setPlaces(data);
+            setFilteredPlaces([])
         } )
 
-    }, [bounds,coordinates])
+    }, [type,bounds,coords])
 
     return ( 
     <>
      <CssBaseline />
-     <Header/>
+     <Header setCoords={setCoords}/>
      <Grid container spacing ={3} style = {{ width: '100%'}}>
          <Grid item xs = {12} md = {4}>
-             <List places = {places}
-              isClicked = {isClicked} />
+             <List places = {filteredPlaces.length ? filteredPlaces: places}
+              isClicked = {isClicked}
+               type ={type}
+               setType ={setType}
+               rating ={rating} 
+               setRating = {setRating}
+               />
              </Grid> 
              <Grid item xs = {12} md = {8}>
                  <Map 
-                  setCoordinates = {setCoordinates}
+                  setCoords = {setCoords}
                   setBounds = {setBounds}
-                  places = {places}
-                  setIsClicked = {setIsClicked} />
+                  places = {filteredPlaces.length ? filteredPlaces: places}
+                  setIsClicked = {setIsClicked} 
+                 />
              </Grid> 
      </Grid>
 

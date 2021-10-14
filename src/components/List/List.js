@@ -1,15 +1,15 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {CircularProgress,Typography, FormControl, InputLabel, Grid, MenuItem, Select } from '@material-ui/core'
 
 import useStyle from './Styles';
 import PlaceDetails from '../PlaceDetails/PlaceDetails'
 
-const List = ({places, isClicked}) => {
+const List = ({places, isClicked,type, setType,rating, setRating}) => {
     const classes = useStyle();
-    const[type, setType] = useState('Restaurants');
-    const [ rating, setRating] = useState('')
+   
     
-    console.log({isClicked})
+
+  console.log({isClicked});
     return (
         <div className = {classes.container} >
             <Typography variant = "h4"> Restaurants, Hotels and attractions around you </Typography>
